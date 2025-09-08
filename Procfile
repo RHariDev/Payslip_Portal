@@ -1,1 +1,1 @@
-web: gunicorn payslip_portal.wsgi
+web: gunicorn payslip_portal.wsgi --log-file -
