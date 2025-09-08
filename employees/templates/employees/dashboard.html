@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Employee Dashboard</title>
+    </head>
+    <body>
+        <h2>Welcome, {{ employee.name }}</h2>
+        <p>Employee No: {{ employee.empno }}</p>
+
+        <h3>Your Payslips:</h3>
+        <ul>
+            {% for slip in payslips %}
+                <li>
+                    {{ slip.month }} -
+                    <a href="{{ slip.pdf_file.url }}"
+                       target="_blank">Download</a>
+                </li>
+            {% empty %}
+                <li>No payslips available.</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'logout' %}">Logout</a>
+    </body>
+</html>
