@@ -70,14 +70,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # Use Render Postgres if DATABASE_URL is set, else fall back to sqlite (local dev)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'payslip_portal_db',
-        'USER': 'postgres',
-        'PASSWORD': '1234567890',
-        'HOST': 'localhost',  # or the host provided by Render
-        'PORT': '5432',       # default PostgreSQL port
-    }
+    'default': dj_database_url.config(
+        default='postgresql://payslip_portal_db_user:PmuOp9LlAGrHkxOUE3fq0Q1UEpz7UhDG@dpg-d2v8tqogjchc73avpb6g-a.oregon-postgres.render.com/payslip_portal_db'
+    )
 }
 
 
