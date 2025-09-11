@@ -8,6 +8,7 @@ import dj_database_url  # make sure to install this: pip install dj-database-url
 
 from dotenv import load_dotenv
 load_dotenv()
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -71,7 +72,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Use Render Postgres if DATABASE_URL is set, else fall back to sqlite (local dev)
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://payslip_portal_db_user:PmuOp9LlAGrHkxOUE3fq0Q1UEpz7UhDG@dpg-d2v8tqogjchc73avpb6g-a.oregon-postgres.render.com/payslip_portal_db'
+        default=config("DATABASE_URL"), 
+        conn_max_age=600, 
+        ssl_require=True
     )
 }
 
@@ -96,6 +99,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media files (for development only, not used in production with Cloudinary)
 MEDIA_URL = '/media/'

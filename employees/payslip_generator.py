@@ -123,6 +123,18 @@ def generate_and_store_payslips(dbf_path, month, year):
     generated = 0
     failed = []
 
+    # --- 1. Preload all employees in a dict (one query)
+    empnos = df["EMPNO"].astype(int).tolist()
+    employees = Employee.objects.in_bulk(empnos, field_name="empno")
+
+    # --- 2. Preload existing payslips for this month/year
+    existing = Payslip.objects.filter(
+        employee__empno__in=empnos, month=month_name, year=year
+    ).select_related("employee")
+    existing_map = {p.employee.empno: p for p in existing}
+
+    new_payslips = []  # collect payslips to bulk_create
+    
     for _, row in df.iterrows():
         empno = int(row["EMPNO"])
         emp_data = extract_employee_data(row)
@@ -133,19 +145,37 @@ def generate_and_store_payslips(dbf_path, month, year):
 
         pdf_bytes = pdf.output(dest="S").encode("latin1")  # Get PDF as bytes
 
-        try:
-            employee = Employee.objects.get(empno=empno)
-        except Employee.DoesNotExist:
+        employee = employees.get(empno)
+        if not employee:
             failed.append(empno)
             continue  # Skip if employee not in system
 
-        payslip, created = Payslip.objects.get_or_create(
-            employee=employee,
-            month=month_name,
-            year=year,
-        )
-        payslip.pdf_file.save(f"payslip_{empno}_{month}{year}.pdf", ContentFile(pdf_bytes), save=True)
+        payslip = existing_map.get(empno)
+        if payslip:
+            # Update existing payslip
+            payslip.pdf_file.save(
+                f"payslip_{empno}_{month}{year}.pdf", 
+                ContentFile(pdf_bytes), 
+                save=True, 
+            )
+        else:
+            # Create new payslip instance
+            payslip = Payslip(
+                employee=employee,
+                month=month_name,
+                year=year,
+            )
+            payslip.pdf_file.save(
+                f"payslip_{empno}_{month}{year}.pdf", 
+                ContentFile(pdf_bytes), 
+                save=False, 
+            )
+            new_payslips.append(payslip)
+
         generated += 1
+        
+        if new_payslips:
+            Payslip.objects.bulk_create(new_payslips)
 
     return { 
         "count": generated,
