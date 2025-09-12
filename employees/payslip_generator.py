@@ -124,8 +124,11 @@ def generate_and_store_payslips(dbf_path, month, year):
     failed = []
 
     # --- 1. Preload all employees in a dict (one query)
-    empnos = df["EMPNO"].astype(int).tolist()
+    empnos = df["EMPNO"].astype(str).str.strip().tolist()
     employees = Employee.objects.in_bulk(empnos, field_name="empno")
+
+    print("Empnos from DBF:", empnos[:20])
+    print("Empnos from DB:", list(employees.keys())[:20])
 
     # --- 2. Preload existing payslips for this month/year
     existing = Payslip.objects.filter(
@@ -136,7 +139,7 @@ def generate_and_store_payslips(dbf_path, month, year):
     new_payslips = []  # collect payslips to bulk_create
     
     for _, row in df.iterrows():
-        empno = int(row["EMPNO"])
+        empno = str(row["EMPNO"]).strip()
         emp_data = extract_employee_data(row)
 
         pdf = PayslipPDF(month_name, year)
@@ -174,8 +177,8 @@ def generate_and_store_payslips(dbf_path, month, year):
 
         generated += 1
         
-        if new_payslips:
-            Payslip.objects.bulk_create(new_payslips)
+    if new_payslips:
+        Payslip.objects.bulk_create(new_payslips)
 
     return { 
         "count": generated,
