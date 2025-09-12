@@ -171,14 +171,14 @@ def generate_and_store_payslips(dbf_path, month, year):
             payslip.pdf_file.save(
                 f"payslip_{empno}_{month}{year}.pdf", 
                 ContentFile(pdf_bytes), 
-                save=False, 
+                save=True, 
             )
             new_payslips.append(payslip)
 
         generated += 1
         
-    if new_payslips:
-        Payslip.objects.bulk_create(new_payslips)
+    # if new_payslips:
+    #     Payslip.objects.bulk_create(new_payslips)
 
     return { 
         "count": generated,
