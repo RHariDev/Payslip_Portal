@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-dev-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["*"]  # later, replace "*" with your render.com domain
+ALLOWED_HOSTS = ["https://payslip-portal-tmgc.onrender.com, localhost"]  # later, replace "*" with your render.com domain
 
 # Application definition
 INSTALLED_APPS = [
