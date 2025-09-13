@@ -1,6 +1,7 @@
 import calendar
 from django.contrib import messages
 import tempfile
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.files.base import ContentFile
@@ -75,3 +76,15 @@ def upload_dbf(request):
         return redirect("upload_dbf")
 
     return render(request, "employees/upload_dbf.html")
+
+
+from django.core.files.storage import default_storage
+from django.conf import settings
+import os 
+
+def storage_check(request):
+    return JsonResponse({
+        "storage_backend": str(default_storage.__class__),
+        "default_file_storage": settings.DEFAULT_FILE_STORAGE,
+        "cloudinary_url": os.getenv("CLOUDINARY_URL")
+    })
