@@ -8,7 +8,6 @@ import dj_database_url  # make sure to install this: pip install dj-database-url
 
 from dotenv import load_dotenv
 load_dotenv()
-from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,7 +17,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-dev-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 
 # Application definition
 INSTALLED_APPS = [
@@ -72,7 +71,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Use Render Postgres if DATABASE_URL is set, else fall back to sqlite (local dev)
 DATABASES = {
     'default': dj_database_url.config(
-        default=config("DATABASE_URL"), 
+        default=os.getenv("DATABASE_URL"), 
         conn_max_age=600, 
         ssl_require=True
     )
