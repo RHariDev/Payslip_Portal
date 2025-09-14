@@ -1,4 +1,6 @@
-from django.db import models
+from django.db import models 
+
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 # Create your models here. 
 class Employee(models.Model):
@@ -15,7 +17,10 @@ class Payslip(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="payslips")
     month = models.CharField(max_length=6)
     year = models.IntegerField()
-    pdf_file = models.FileField(upload_to='payslips/')
+    pdf_file = models.FileField(
+        upload_to='payslips/', 
+        storage=MediaCloudinaryStorage() 
+    )
     generated_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

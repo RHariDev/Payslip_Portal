@@ -153,12 +153,9 @@ def generate_and_store_payslips(dbf_path, month, year):
         payslip = existing_map.get(empno)
         if payslip:
             # Update existing payslip
-            from django.core.files.storage import default_storage
             payslip.pdf_file.save(
-                f"payslips/payslip_{empno}_{month}{year}.pdf", 
+                f"payslip_{empno}_{month}{year}.pdf", 
                 ContentFile(pdf_bytes), 
-                save=True, 
-                storage=default_storage, 
             )
         else:
             # Create new payslip instance
@@ -167,12 +164,9 @@ def generate_and_store_payslips(dbf_path, month, year):
                 month=month_name,
                 year=year,
             )
-            from django.core.files.storage import default_storage
             payslip.pdf_file.save(
-                f"payslips/payslip_{empno}_{month}{year}.pdf", 
+                f"payslip_{empno}_{month}{year}.pdf", 
                 ContentFile(pdf_bytes), 
-                save=True, 
-                storage=default_storage, 
             )
             # new_payslips.append(payslip)
 
