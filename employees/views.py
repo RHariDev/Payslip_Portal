@@ -86,6 +86,5 @@ def storage_check(request):
     storage = storages['default']
     return JsonResponse({
         "storage_backend": str(storage.__class__),
-        "default_file_storage": settings.DEFAULT_FILE_STORAGE,
         "cloudinary_url": os.getenv("CLOUDINARY_URL")
     })
