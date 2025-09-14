@@ -108,5 +108,4 @@ CLOUDINARY_URL = os.getenv("CLOUDINARY_URL")
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-import cloudinary
-cloudinary.config(cloudinary_url=CLOUDINARY_URL)
+print(">>> DEFAULT_FILE_STORAGE =", DEFAULT_FILE_STORAGE)
