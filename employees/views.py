@@ -78,13 +78,11 @@ def upload_dbf(request):
     return render(request, "employees/upload_dbf.html")
 
 
-from django.core.files.storage import storages
-from django.conf import settings
+from django.core.files.storage import default_storage
 import os 
 
 def storage_check(request):
-    storage = storages['default']
     return JsonResponse({
-        "storage_backend": str(storage.__class__),
+        "storage_backend": str(default_storage.__class__),
         "cloudinary_url": os.getenv("CLOUDINARY_URL")
     })
