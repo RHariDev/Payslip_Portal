@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.urls import path
 
 from employees import views
@@ -8,4 +9,5 @@ urlpatterns = [
     path('logout/', views.employee_logout, name="logout"),
     path('upload/', views.upload_dbf, name="upload_dbf"),
     path("check-storage/", views.storage_check, name="check_storage"),
+    path("", lambda request: redirect("dashboard") if request.session.get('employee_id') else redirect("login"), name="home"),
 ]
