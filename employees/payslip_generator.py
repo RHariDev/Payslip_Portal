@@ -156,6 +156,7 @@ def generate_and_store_payslips(dbf_path, month, year):
             payslip.pdf_file.save(
                 f"payslip_{empno}_{month}{year}.pdf", 
                 ContentFile(pdf_bytes), 
+                save=True, 
             )
         else:
             # Create new payslip instance
@@ -167,6 +168,7 @@ def generate_and_store_payslips(dbf_path, month, year):
             payslip.pdf_file.save(
                 f"payslip_{empno}_{month}{year}.pdf", 
                 ContentFile(pdf_bytes), 
+                save=True, 
             )
             # new_payslips.append(payslip)
 
