@@ -1,6 +1,6 @@
 from django.db import models 
 
-from cloudinary_storage.storage import MediaCloudinaryStorage
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
 
 # Create your models here. 
 class Employee(models.Model):
@@ -19,7 +19,7 @@ class Payslip(models.Model):
     year = models.IntegerField()
     pdf_file = models.FileField(
         upload_to='payslips/', 
-        storage=MediaCloudinaryStorage() 
+        storage=RawMediaCloudinaryStorage(),  
     )
     generated_at = models.DateTimeField(auto_now_add=True)
 
