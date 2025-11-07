@@ -1,26 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Employee Dashboard</title>
-    </head>
-    <body>
-        <h2>Welcome, {{ employee.name }}</h2>
-        <p>Employee No: {{ employee.empno }}</p>
+{% extends "employees/base.html" %}
+{% block content %}
+<div class="dashboard-card">
+  <h2>Welcome, {{ employee.name }}</h2>
+  <p><strong>Employee No:</strong> {{ employee.empno }}</p>
 
-        <h3>Your Payslips:</h3>
-        <ul>
-            {% for slip in payslips %}
-                <li>
-                    {{ slip.month }} -
-                    <a href="{{ slip.pdf_file.url }}"
-                       target="_blank">Download</a>
-                </li>
-            {% empty %}
-                <li>No payslips available.</li>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'logout' %}">Logout</a>
-    </body>
-</html>
+  <h3>Your Payslips</h3>
+
+  <form method="get" style="margin-bottom: 20px;">
+    <label for="month">Month:</label>
+    <select name="month" id="month">
+        <option value="">All</option>
+        {% for m in month_range %}
+        <option value="{{ m }}" {% if selected_month == m %}selected{% endif %}>{{ m }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="year">Year:</label>
+    <select name="year" id="year">
+        <option value="">All</option>
+        {% for y in year_range %}
+        <option value="{{ y }}" {% if selected_year|add:""|stringformat:"s" == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Filter</button>
+  </form>
+
+
+  <!-- 🔹 Payslip List -->
+  <ul>
+    {% for slip in payslips %}
+      <li>
+        {{ slip.month }} {{ slip.year }} — 
+        <a href="{{ slip.pdf_file.url }}" target="_blank">Download</a>
+      </li>
+    {% empty %}
+      <li>No payslips available yet.</li>
+    {% endfor %}
+  </ul>
+
+  <p><a class="logout-link" href="{% url 'logout' %}">Logout</a></p>
+</div>
+{% endblock %}

@@ -1,4 +1,5 @@
 import calendar
+from datetime import datetime
 from django.contrib import messages
 import tempfile
 from django.http import JsonResponse
@@ -30,18 +31,58 @@ def employee_login(request):
 
     return render(request, 'employees/login.html', {'form': form})
 
+# def employee_dashboard(request):
+#     employee_id = request.session.get('employee_id')
+#     if not employee_id:
+#         return redirect("login")
+
+#     employee = Employee.objects.get(id=employee_id)
+#     payslips = employee.payslips.all().order_by('-month')
+
+#     return render(request, "employees/dashboard.html", {
+#         "employee": employee,
+#         "payslips": payslips,
+#     }) 
+
 def employee_dashboard(request):
     employee_id = request.session.get('employee_id')
     if not employee_id:
         return redirect("login")
 
     employee = Employee.objects.get(id=employee_id)
-    payslips = employee.payslips.all().order_by('-month')
+    payslips = list(employee.payslips.all())
+
+    # --- Define correct month order ---
+    month_order = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ]
+
+    # --- Filtering logic ---
+    month = request.GET.get('month')
+    year = request.GET.get('year')
+
+    if month:
+        payslips = [p for p in payslips if p.month == month]
+    if year:
+        payslips = [p for p in payslips if str(p.year) == str(year)]
+
+    # --- Sort payslips correctly (by year desc, then month order) ---
+    payslips.sort(key=lambda p: (p.year, month_order.index(p.month)), reverse=True)
+
+    # --- Prepare dropdown data ---
+    current_year = datetime.now().year
+    month_range = month_order  # use actual month names for dropdown
+    year_range = range(current_year - 5, current_year + 1)
 
     return render(request, "employees/dashboard.html", {
         "employee": employee,
         "payslips": payslips,
-    })
+        "month_range": month_range,
+        "year_range": year_range,
+        "selected_month": month or "",
+        "selected_year": year or "",
+    }) 
 
 def employee_logout(request):
     request.session.flush()

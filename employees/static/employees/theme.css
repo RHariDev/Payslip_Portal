@@ -1,0 +1,224 @@
+/* ===== PaySlip Portal Theme ===== */
+:root {
+  --primary-color: #4e73df;
+  --secondary-color: #1cc88a;
+  --accent-color: #f6c23e;
+  --bg-light: #f8f9fc;
+  --text-dark: #2e2e2e;
+  --white: #ffffff;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --radius: 10px;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Header ===== */
+.header {
+  background: var(--primary-color);
+  color: var(--white);
+  text-align: center;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* ===== Card (Page Container) ===== */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  max-width: 450px;
+  margin: 3rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.card h2 {
+  color: var(--primary-color);
+}
+
+/* ===== Form ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+label {
+  font-weight: 500;
+  text-align: left;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="file"] {
+  padding: 0.8rem;
+  border-radius: var(--radius);
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+button {
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 0.8rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: var(--secondary-color);
+}
+
+/* ===== Links ===== */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Messages ===== */
+.message {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+}
+
+.message.error {
+  background: #fdecea;
+  color: #c0392b;
+}
+
+.message.success {
+  background: #eafaf1;
+  color: #2e7d32;
+}
+
+/* ===== Dashboard ===== */
+.dashboard-card {
+  background: var(--white);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 1rem auto;
+  max-width: 700px;
+}
+
+.dashboard-card h3 {
+  color: var(--primary-color);
+} 
+
+.dashboard-container {
+  max-width: 900px;
+  margin: 50px auto;
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h2 {
+  color: #1e40af;
+  margin-bottom: 0.3rem;
+}
+
+.filter-card {
+  margin-bottom: 1.5rem;
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-form select,
+.filter-form button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.filter-form button {
+  background: #1e40af;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.filter-form button:hover {
+  background: #1d4ed8;
+}
+
+.payslip-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.payslip-table th, .payslip-table td {
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.payslip-table th {
+  background: #e0e7ff;
+  color: #1e3a8a;
+}
+
+.download-btn {
+  color: white;
+  background: #2563eb;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.download-btn:hover {
+  background: #1d4ed8;
+}
+
+.logout-link {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+ 
