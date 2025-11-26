@@ -16,11 +16,11 @@ def employee_login(request):
     if request.method == 'POST':
         form = EmployeeLoginForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
+            empno = form.cleaned_data['empno']
             dob = form.cleaned_data['dob']
             # Authenticate employee
             try:
-                employee = Employee.objects.get(name=name, dob=dob)
+                employee = Employee.objects.get(empno=empno, dob=dob)
                 # Store employee in session
                 request.session['employee_id'] = employee.id
                 return redirect("dashboard")

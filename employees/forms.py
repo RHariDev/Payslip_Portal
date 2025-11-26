@@ -2,7 +2,7 @@ from django import forms
 from .models import Payslip
 
 class EmployeeLoginForm(forms.Form):
-    name = forms.CharField(max_length=100, label="Full Name")
+    empno = forms.CharField(max_length=10, label="Employee Number")
     dob = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
         label="Date of Birth"
