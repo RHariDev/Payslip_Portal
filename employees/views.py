@@ -29,20 +29,7 @@ def employee_login(request):
     else:
         form = EmployeeLoginForm()
 
-    return render(request, 'employees/login.html', {'form': form})
-
-# def employee_dashboard(request):
-#     employee_id = request.session.get('employee_id')
-#     if not employee_id:
-#         return redirect("login")
-
-#     employee = Employee.objects.get(id=employee_id)
-#     payslips = employee.payslips.all().order_by('-month')
-
-#     return render(request, "employees/dashboard.html", {
-#         "employee": employee,
-#         "payslips": payslips,
-#     }) 
+    return render(request, 'employees/login.html', {'form': form}) 
 
 def employee_dashboard(request):
     employee_id = request.session.get('employee_id')
@@ -126,4 +113,144 @@ def storage_check(request):
     return JsonResponse({
         "storage_backend": str(default_storage.__class__),
         "cloudinary_url": os.getenv("CLOUDINARY_URL")
-    })
+    }) 
+ 
+
+# import calendar
+# from datetime import datetime
+# import tempfile
+
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+# from django.contrib.admin.views.decorators import staff_member_required
+
+# from employees.models import Employee
+# from employees.payslip_generator import generate_and_store_payslips
+
+
+# # ------------------------------------------------------------
+# # 1️⃣ EMPLOYEE LOGIN (React)
+# # ------------------------------------------------------------
+# @csrf_exempt
+# def employee_login(request):
+#     if request.method != 'POST':
+#         return JsonResponse({"error": "Invalid method"}, status=405)
+
+#     empno = request.POST.get('empno')
+#     dob = request.POST.get('dob')
+
+#     try:
+#         employee = Employee.objects.get(empno=empno, dob=dob)
+#         request.session['employee_id'] = employee.id
+
+#         return JsonResponse({
+#             "success": True,
+#             "employee": {
+#                 "name": employee.name,
+#                 "empno": employee.empno
+#             }
+#         })
+
+#     except Employee.DoesNotExist:
+#         return JsonResponse({
+#             "success": False,
+#             "error": "Invalid credentials"
+#         }, status=401)
+
+
+# # ------------------------------------------------------------
+# # 2️⃣ FETCH PAYSLOPS (React Dashboard)
+# # ------------------------------------------------------------
+# def employee_dashboard(request):
+#     employee_id = request.session.get('employee_id')
+
+#     if not employee_id:
+#         return JsonResponse({"error": "Unauthorized"}, status=401)
+
+#     employee = Employee.objects.get(id=employee_id)
+#     payslips = employee.payslips.all().order_by("-year", "-month")
+
+#     # --- Filters ---
+#     month = request.GET.get("month")
+#     year = request.GET.get("year")
+
+#     if month:
+#         payslips = payslips.filter(month=month)
+
+#     if year:
+#         payslips = payslips.filter(year=year)
+
+#     month_order = [
+#         "January", "February", "March", "April", "May", "June",
+#         "July", "August", "September", "October", "November", "December"
+#     ]
+
+#     # Manual month sorting
+#     payslips = sorted(
+#         payslips,
+#         key=lambda p: (p.year, month_order.index(p.month)),
+#         reverse=True
+#     )
+
+#     data = {
+#         "employee": {
+#             "name": employee.name,
+#             "empno": employee.empno,
+#         },
+#         "payslips": [
+#             {
+#                 "id": p.id,
+#                 "month": p.month,
+#                 "year": p.year,
+#                 "pdf_url": p.pdf_file.url,
+#             }
+#             for p in payslips
+#         ],
+#         "months": month_order,
+#         "years": list(range(datetime.now().year - 5, datetime.now().year + 1)),
+#     }
+
+#     return JsonResponse(data, safe=False)
+
+
+# # ------------------------------------------------------------
+# # 3️⃣ LOGOUT (React)
+# # ------------------------------------------------------------
+# def employee_logout(request):
+#     request.session.flush()
+#     return JsonResponse({"success": True})
+
+
+# # ------------------------------------------------------------
+# # 4️⃣ ADMIN — UPLOAD DBF FILE (React Admin Panel)
+# # ------------------------------------------------------------
+# @csrf_exempt
+# @staff_member_required
+# def upload_dbf(request):
+#     if request.method != "POST":
+#         return JsonResponse({"error": "Invalid method"}, status=405)
+
+#     dbf_file = request.FILES.get("dbf_file")
+#     month = request.POST.get("month")
+#     year = request.POST.get("year")
+
+#     if not dbf_file or not month or not year:
+#         return JsonResponse({
+#             "success": False,
+#             "error": "Missing required fields (dbf_file/month/year)"
+#         }, status=400)
+
+#     # Save as temporary file
+#     with tempfile.NamedTemporaryFile(delete=False, suffix=".dbf") as tmp:
+#         for chunk in dbf_file.chunks():
+#             tmp.write(chunk)
+#         tmp_path = tmp.name
+
+#     # Process DBF → Generate payslips → Save PDFs
+#     result = generate_and_store_payslips(tmp_path, month, year)
+
+#     return JsonResponse({
+#         "success": True,
+#         "generated": result.get("count", 0),
+#         "failed": result.get("failed", []),
+#     })

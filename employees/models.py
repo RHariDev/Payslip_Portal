@@ -15,7 +15,7 @@ class Employee(models.Model):
     
 class Payslip(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="payslips")
-    month = models.CharField(max_length=6)
+    month = models.CharField(max_length=25)
     year = models.IntegerField()
     pdf_file = models.FileField(
         upload_to='payslips/', 
