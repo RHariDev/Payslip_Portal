@@ -24,6 +24,6 @@ class Payslip(models.Model):
     generated_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Payslip for {self.employee.empno} - {self.month}"
+        return f"Payslip for {self.employee.empno} - {self.month}" 
  
     
