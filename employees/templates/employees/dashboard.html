@@ -1,5 +1,5 @@
 {% extends "employees/base.html" %}
-{% block content %}
+{% block content %} 
 <div class="dashboard-card">
   <h2>Welcome, {{ employee.name }}</h2>
   <p><strong>Employee No:</strong> {{ employee.empno }}</p>
@@ -39,6 +39,5 @@
     {% endfor %}
   </ul>
 
-  <p><a class="logout-link" href="{% url 'logout' %}">Logout</a></p>
 </div>
 {% endblock %}

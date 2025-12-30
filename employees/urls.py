@@ -4,7 +4,8 @@ from django.urls import path
 from employees import views
 
 urlpatterns = [
-    path('login/', views.employee_login, name="login"),
+    path('login/', views.employee_login, name="login"), 
+    path('employee/profile/', views.employee_profile, name="employee_profile"),
     path('dashboard/', views.employee_dashboard, name="dashboard"),
     path('logout/', views.employee_logout, name="logout"),
     path('upload/', views.upload_dbf, name="upload_dbf"),

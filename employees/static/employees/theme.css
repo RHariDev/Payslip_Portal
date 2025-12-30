@@ -37,6 +37,10 @@ body {
   margin: 0;
   font-size: 1.1rem;
   opacity: 0.9;
+} 
+
+h3 {
+  color: var(--text-dark); 
 }
 
 /* ===== Card (Page Container) ===== */
@@ -222,3 +226,120 @@ a:hover {
   margin-top: 1.5rem;
 }
  
+/* ===== Header Centered Layout ===== */
+.header {
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.header-top {
+  display: flex;
+  justify-content: center;   /* center the whole block */
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-text {
+  text-align: center;
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+.header-text h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}/* ===== Header Centered Layout ===== */
+.header {
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.header-top {
+  display: flex;
+  justify-content: center;   /* center the whole block */
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-text {
+  text-align: center;
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+.header-text h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+} 
+
+/* ===== Dropdown Menu ===== */
+.dropdown {
+  position: relative;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;   /* directly below the button */
+  left: 0;
+  background-color: var(--white);
+  min-width: 160px;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  z-index: 1000;
+}
+
+.dropdown-content a {
+  color: var(--text-dark);
+  padding: 10px 14px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--bg-light);
+}
+
+.dropdown.show .dropdown-content {
+  display: block;
+} 
+
+/* ===== Profile Page ===== */ 
+#profile-view p {
+  margin: 0.5rem 0;
+}
+
+#profile-edit label {
+  display: block;
+  margin-top: 0.8rem;
+  font-weight: 500;
+}
+
+#profile-edit input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: var(--radius);
+  border: 1px solid #ccc;
+} 

@@ -1,0 +1,41 @@
+{% extends "employees/base.html" %}
+{% block content %} 
+<div class="card">
+  <h2>Employee Profile</h2>
+
+  <!-- Read-only view -->
+  <div id="profile-view">
+    <p><strong>Employee No:</strong> {{ employee.empno }}</p>
+    <p><strong>Name:</strong> {{ employee.name }}</p>
+    <p><strong>Date of Birth:</strong> {{ employee.dob }}</p>
+    <p><strong>Email:</strong> {{ employee.email }}</p>
+    <p><strong>Phone:</strong> {{ employee.phone }}</p>
+    <button id="edit-btn">Edit Profile</button>
+  </div>
+
+  <!-- Editable form (hidden initially) -->
+  <form id="profile-edit" method="post" style="display:none;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+    <button type="button" id="cancel-btn">Cancel</button>
+  </form>
+</div>
+
+<script>
+  const editBtn = document.getElementById("edit-btn");
+  const cancelBtn = document.getElementById("cancel-btn");
+  const viewBlock = document.getElementById("profile-view");
+  const editBlock = document.getElementById("profile-edit");
+
+  editBtn.addEventListener("click", () => {
+    viewBlock.style.display = "none";
+    editBlock.style.display = "block";
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    editBlock.style.display = "none";
+    viewBlock.style.display = "block";
+  });
+</script> 
+{% endblock %} 

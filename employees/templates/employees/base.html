@@ -9,12 +9,40 @@
 </head>
 <body>
   <div class="header">
-    <h1>St. Joseph’s Higher Secondary School</h1>
-    <h2>Payslip Portal</h2>
+    <div class="header-left">
+      <!-- Hamburger dropdown -->
+      <div class="dropdown">
+        <button class="menu-btn">&#9776;</button>
+        <div class="dropdown-content">
+          <a href="{% url 'employee_profile' %}">Profile</a>
+          <a href="{% url 'dashboard' %}">Dashboard</a>
+          <a href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div> 
+      <div class="header-text"> 
+        <h1>St. Joseph’s Higher Secondary School</h1> 
+        <h2>Payslip Portal</h2> 
+      </div>
+    </div>
   </div>
 
   {% block content %}
   {% endblock %}
+
+  <script>
+    const menuBtn = document.querySelector('.menu-btn');
+    const dropdown = document.querySelector('.dropdown');
+
+    menuBtn.addEventListener('click', function(e) {
+      e.stopPropagation(); // prevent window click from closing immediately
+      dropdown.classList.toggle('show');
+    });
+
+    window.addEventListener('click', function(e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+  </script>
 </body>
 </html>
- 

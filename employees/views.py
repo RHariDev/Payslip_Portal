@@ -3,11 +3,11 @@ from datetime import datetime
 from django.contrib import messages
 import tempfile
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.files.base import ContentFile
 
-from employees.forms import EmployeeLoginForm, PayslipUploadForm
+from employees.forms import EmployeeForm, EmployeeLoginForm, PayslipUploadForm
 from employees.models import Employee
 from employees.payslip_generator import generate_and_store_payslips
 
@@ -30,6 +30,20 @@ def employee_login(request):
         form = EmployeeLoginForm()
 
     return render(request, 'employees/login.html', {'form': form}) 
+
+def employee_profile(request):
+    empno = request.session.get('employee_id') 
+    employee = get_object_or_404(Employee, id=empno)
+
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+            return redirect('employee_profile')  # reload page after save
+    else:
+        form = EmployeeForm(instance=employee)  
+
+    return render(request, 'employees/employee_profile.html', {'form': form, 'employee': employee}) 
 
 def employee_dashboard(request):
     employee_id = request.session.get('employee_id')
