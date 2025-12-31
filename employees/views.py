@@ -33,6 +33,8 @@ def employee_login(request):
 
 def employee_profile(request):
     empno = request.session.get('employee_id') 
+    if not empno: 
+        return redirect("login") 
     employee = get_object_or_404(Employee, id=empno)
 
     if request.method == 'POST':
