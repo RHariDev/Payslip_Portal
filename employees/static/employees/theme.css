@@ -18,31 +18,6 @@ body {
   padding: 0;
 }
 
-/* ===== Header ===== */
-.header {
-  background: var(--primary-color);
-  color: var(--white);
-  text-align: center;
-  padding: 1rem;
-  box-shadow: var(--shadow);
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  letter-spacing: 0.5px;
-}
-
-.header h2 {
-  margin: 0;
-  font-size: 1.1rem;
-  opacity: 0.9;
-} 
-
-h3 {
-  color: var(--text-dark); 
-}
-
 /* ===== Card (Page Container) ===== */
 .card {
   background: var(--white);
@@ -226,85 +201,58 @@ a:hover {
   margin-top: 1.5rem;
 }
  
-/* ===== Header Centered Layout ===== */
+/* ===== Header (GRID – FINAL FIX) ===== */
 .header {
   background: var(--primary-color);
-  color: var(--white);
+  color: white;
   padding: 1rem;
-  box-shadow: var(--shadow);
-}
 
-.header-top {
-  display: flex;
-  justify-content: center;   /* center the whole block */
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 1rem;
 }
 
-.header-text {
+/* Left column */
+.header-left {
+  justify-self: start;
+}
+
+/* Center column */
+.header-center {
   text-align: center;
 }
 
-.header-text h1 {
+.header-center h1 {
   margin: 0;
   font-size: 1.8rem;
-  letter-spacing: 0.5px;
 }
 
-.header-text h2 {
+.header-center h2 {
   margin: 0;
   font-size: 1.1rem;
   opacity: 0.9;
-}/* ===== Header Centered Layout ===== */
-.header {
-  background: var(--primary-color);
-  color: var(--white);
-  padding: 1rem;
-  box-shadow: var(--shadow);
 }
 
-.header-top {
-  display: flex;
-  justify-content: center;   /* center the whole block */
-  align-items: center;
-  gap: 1rem;
-}
-
-.header-text {
-  text-align: center;
-}
-
-.header-text h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  letter-spacing: 0.5px;
-}
-
-.header-text h2 {
-  margin: 0;
-  font-size: 1.1rem;
-  opacity: 0.9;
-} 
-
-/* ===== Dropdown Menu ===== */
-.dropdown {
-  position: relative;
-}
-
+/* Hamburger */
 .menu-btn {
   background: none;
   border: none;
-  font-size: 24px;
-  color: var(--white);
+  font-size: 26px;
+  color: white;
   cursor: pointer;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  top: 100%;   /* directly below the button */
+  top: calc(100% + 10px);
   left: 0;
-  background-color: var(--white);
+  background: white;
   min-width: 160px;
   box-shadow: var(--shadow);
   border-radius: var(--radius);
@@ -312,14 +260,14 @@ a:hover {
 }
 
 .dropdown-content a {
-  color: var(--text-dark);
-  padding: 10px 14px;
-  text-decoration: none;
   display: block;
+  padding: 10px 14px;
+  color: var(--text-dark);
+  text-decoration: none;
 }
 
 .dropdown-content a:hover {
-  background-color: var(--bg-light);
+  background: var(--bg-light);
 }
 
 .dropdown.show .dropdown-content {
